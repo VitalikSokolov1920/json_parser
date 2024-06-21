@@ -1,6 +1,6 @@
 #include "parsers/BoolParser.hpp"
 
-ArrayElement BoolParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
+JsonElement BoolParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
 {
     bool result = false, needBreak = false;
     char prev = 0;

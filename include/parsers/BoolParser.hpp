@@ -4,13 +4,13 @@
 #include <string>
 
 #include "parsers/AbstractParser.hpp"
-#include "base_elements/ArrayElement.hpp"
+#include "base_elements/JsonElement.hpp"
 
 class BoolParser : AbstractParser
 {
 public:
     BoolParser() = default;
-    ArrayElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
+    JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
 };
 
 #endif

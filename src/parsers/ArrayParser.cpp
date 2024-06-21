@@ -8,13 +8,13 @@
 #include "parsers/BoolParser.hpp"
 #include "parsers/ObjectParser.hpp"
 
-ArrayElement ArrayParser::Parse(
+JsonElement ArrayParser::Parse(
     std::string::const_iterator &begin,
     std::string::const_iterator &end,
     int *squareBracketCounter,
     int *curlyBracketCounter)
 {
-    std::vector<ArrayElement> array;
+    std::vector<JsonElement> array;
 
     while (begin < end)
     {
@@ -51,7 +51,7 @@ ArrayElement ArrayParser::Parse(
 
             auto strStr = parser.Parse(begin, end);
 
-            ArrayElement str(strStr);
+            JsonElement str(strStr);
 
             array.push_back(str);
 
@@ -107,5 +107,5 @@ ArrayElement ArrayParser::Parse(
         }
     }
 
-    return ArrayElement(array);
+    return JsonElement(array);
 }

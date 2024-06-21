@@ -4,17 +4,17 @@
 #include <unordered_map>
 #include <string>
 
-#include "base_elements/ArrayElement.hpp"
+#include "base_elements/JsonElement.hpp"
 #include "parsers/AbstractParser.hpp"
 
 class ObjectParser : AbstractParser
 {
-    // std::unordered_map<std::string, ArrayElement> fields;
+    // std::unordered_map<std::string, JsonElement> fields;
 
 public:
     ObjectParser() = default;
 
-    ArrayElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
+    JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
 };
 
 #endif

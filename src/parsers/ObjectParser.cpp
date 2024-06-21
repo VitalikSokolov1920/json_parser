@@ -6,11 +6,11 @@
 #include "parsers/NumberParser.hpp"
 #include "parsers/BoolParser.hpp"
 
-ArrayElement ObjectParser::Parse(std::string::const_iterator &begin,
+JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
                                  std::string::const_iterator &end,
                                  int *, int *)
 {
-    std::unordered_map<std::string, ArrayElement> object;
+    std::unordered_map<std::string, JsonElement> object;
     bool hasFieldName = false;
     std::string curFieldName{""};
 

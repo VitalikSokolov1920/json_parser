@@ -8,7 +8,7 @@ NumberParser::NumberParser()
 {
 }
 
-ArrayElement NumberParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
+JsonElement NumberParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
 {
     if (*begin >= '0' && (*begin) <= '9')
     {
@@ -50,10 +50,10 @@ ArrayElement NumberParser::Parse(std::string::const_iterator &begin, std::string
 
         if (isFloat)
         {
-            return ArrayElement(::atof(numberStr.c_str()));
+            return JsonElement(::atof(numberStr.c_str()));
         }
 
-        return ArrayElement(::atoi(numberStr.c_str()));
+        return JsonElement(::atoi(numberStr.c_str()));
 
         // TODO: возможно, нужно убрать
         // if (*begin == ']')
@@ -67,6 +67,6 @@ ArrayElement NumberParser::Parse(std::string::const_iterator &begin, std::string
     else
     {
         // TODO: обработать ошибку
-        return ArrayElement(0);
+        return JsonElement(0);
     }
 }

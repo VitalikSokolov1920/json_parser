@@ -1,59 +1,59 @@
 #include <iostream>
 
-#include "base_elements/ArrayElement.hpp"
+#include "base_elements/JsonElement.hpp"
 
-ArrayElement::ArrayElement(const bool &v)
+JsonElement::JsonElement(const bool &v)
 {
     this->type = BOOL;
     this->elem.boolElem = new bool{v};
 }
 
-ArrayElement::ArrayElement(const int &v)
+JsonElement::JsonElement(const int &v)
 {
     this->type = INT;
     this->elem.intElem = new int{v};
 }
 
-ArrayElement::ArrayElement(const double &v)
+JsonElement::JsonElement(const double &v)
 {
     this->type = DOUBLE;
     this->elem.doubleElem = new double{v};
 }
 
-ArrayElement::ArrayElement(const std::string &v)
+JsonElement::JsonElement(const std::string &v)
 {
     this->type = STRING;
     this->elem.strElem = new std::string{v};
 }
 
-ArrayElement::ArrayElement(const std::vector<ArrayElement> &v)
+JsonElement::JsonElement(const std::vector<JsonElement> &v)
 {
     this->type = ARRAY;
-    this->elem.arrayElem = new std::vector<ArrayElement>(v);
+    this->elem.arrayElem = new std::vector<JsonElement>(v);
 }
 
-ArrayElement::ArrayElement(const std::unordered_map<std::string, ArrayElement> &object)
+JsonElement::JsonElement(const std::unordered_map<std::string, JsonElement> &object)
 {
     this->type = OBJECT;
-    this->elem.objectElem = new std::unordered_map<std::string, ArrayElement>(object);
+    this->elem.objectElem = new std::unordered_map<std::string, JsonElement>(object);
 }
-std::ostream &operator<<(std::ostream &out, const ArrayElement &elem)
+std::ostream &operator<<(std::ostream &out, const JsonElement &elem)
 {
     switch (elem.type)
     {
-    case ArrayElement::BOOL:
+    case JsonElement::BOOL:
         out << "Boolean: " << *elem.elem.boolElem;
         break;
-    case ArrayElement::INT:
+    case JsonElement::INT:
         out << "Interger: " << *elem.elem.intElem;
         break;
-    case ArrayElement::DOUBLE:
+    case JsonElement::DOUBLE:
         out << "Double: " << *elem.elem.doubleElem;
         break;
-    case ArrayElement::STRING:
+    case JsonElement::STRING:
         out << "String: " << *elem.elem.strElem;
         break;
-    case ArrayElement::ARRAY:
+    case JsonElement::ARRAY:
     {
         auto iter = elem.elem.arrayElem->begin();
 
@@ -65,7 +65,7 @@ std::ostream &operator<<(std::ostream &out, const ArrayElement &elem)
         break;
     }
 
-    case ArrayElement::OBJECT:
+    case JsonElement::OBJECT:
     {
         for (auto iter = elem.elem.objectElem->begin(); iter != elem.elem.objectElem->end(); iter++)
         {

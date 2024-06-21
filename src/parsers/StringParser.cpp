@@ -1,6 +1,6 @@
 #include "parsers/StringParser.hpp"
 
-ArrayElement StringParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
+JsonElement StringParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
 {
     std::string strStr;
 

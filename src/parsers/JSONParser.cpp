@@ -3,6 +3,9 @@
 #include "parsers/JSONParser.hpp"
 #include "parsers/ArrayParser.hpp"
 #include "parsers/ObjectParser.hpp"
+#include "parsers/StringParser.hpp"
+#include "parsers/BoolParser.hpp"
+#include "parsers/NumberParser.hpp"
 
 #include <iostream>
 
@@ -46,17 +49,26 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         case ',':
 
             break;
-        case '"':
+        case '"': {
+            strIter++;
+
+            StringParser p;
+
+            auto elem = p.Parse(strIter, endIter);
 
             break;
+        }
         // true
         case 't':
-            break;
         // false
-        case 'f':
-            break;
-        case ':':
+        case 'f': {
+            BoolParser p;
 
+            auto elem = p.Parse(strIter, endIter);
+
+            break;
+        }
+        case ':':
             break;
 
         // все неслужебные символы

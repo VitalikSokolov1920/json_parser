@@ -3,14 +3,14 @@
 
 #include <string>
 
-#include "base_elements/ArrayElement.hpp"
+#include "base_elements/JsonElement.hpp"
 #include "parsers/AbstractParser.hpp"
 
 class StringParser : AbstractParser
 {
 public:
     StringParser() = default;
-    ArrayElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
+    JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "base_elements/ArrayElement.hpp"
+#include "base_elements/JsonElement.hpp"
 
 enum ParserError
 {
@@ -18,7 +18,7 @@ private:
 
 public:
     AbstractParser() = default;
-    virtual ArrayElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr) = 0;
+    virtual JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr) = 0;
 
 protected:
     // TODO: переписать, чтобы был код ошибки + подстрока, хранящая место, где ошибка

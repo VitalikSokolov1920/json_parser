@@ -7,7 +7,7 @@ ifeq ($(OS), Windows_NT)
 		src\JSONFileReader.o \
 		src\JSONExceptions.o \
 		src\JSONResult.o \
-		src\base_elements\ArrayElement.o \
+		src\base_elements\JsonElement.o \
 		src\parsers\AbstractParser.o \
 		src\parsers\ArrayParser.o \
 		src\parsers\NumberParser.o \
@@ -21,7 +21,7 @@ else
 		src/JSONFileReader.o \
 		src/JSONExceptions.o \
 		src/JSONResult.o \
-		src/base_elements/ArrayElement.o \
+		src/base_elements/JsonElement.o \
 		src/parsers/AbstractParser.o \
 		src/parsers/ArrayParser.o \
 		src/parsers/NumberParser.o \
