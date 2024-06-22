@@ -4,17 +4,23 @@
 #include <cstddef>
 #include <string>
 
+#include "base_elements/JsonElement.hpp"
+
 namespace JSON
 {
-    class Filed
-    {
-    };
-
     class JSONDocument
     {
+        JsonElement elem;
+
     public:
-        JSONDocument() = default;
-        int &operator[](std::string filed);
+        JSONDocument(const JsonElement &elem) : elem(elem) {}
+        // для получения значения свойства объекта
+        JsonElement operator[](std::string);
+        JsonElement operator[](int);
+        std::string toString();
+        int toInt();
+        double toDouble();
+        bool toBool();
         // virtual void setArrayValue(std::string fieldName, std::vector<long long> vec) = 0;
         // virtual void setArrayValue(std::string fieldName, std::vector<double> vec) = 0;
         /*

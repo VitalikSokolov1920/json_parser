@@ -1,22 +1,36 @@
 [
-    123,
-    456,
-    789,
-    10.3,
-    "asdasd",
-    null,
-    200,
-    true,
-    false,
     [
-        false,
-        10,
+        123,
+        456,
+        789,
+        10.3,
+        "asdasd",
+        null,
+        200,
         true,
-        11,
-        12,
-        null
+        false,
+        [
+            false,
+            10,
+            true,
+            11,
+            12,
+            null
+        ],
+        {
+            "a": 10,
+            "b": "hello",
+            "c": null
+        }
     ],
     {
+        "objectNumber": 1,
+        "a": 10,
+        "b": "hello",
+        "c": null
+    },
+    {
+        "objectNumber": 2,
         "a": 10,
         "b": "hello",
         "c": null

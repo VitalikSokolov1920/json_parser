@@ -54,9 +54,14 @@ namespace JSON
         JsonElement(const std::unordered_map<std::string, JsonElement> &);
         JsonElement(void *);
         JsonElement(const JsonElement &);
+        std::string toString() const;
         JsonElement &operator=(const JsonElement &);
         friend std::ostream &operator<<(std::ostream &out, const JSON::JsonElement &elem);
         virtual ~JsonElement();
+        TYPE Type() const
+        {
+            return type;
+        }
     };
 }
 

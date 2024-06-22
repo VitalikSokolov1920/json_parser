@@ -71,6 +71,77 @@ JSON::JsonElement::JsonElement(const JsonElement &other)
     *this = other;
 }
 
+std::string JSON::JsonElement::toString() const
+{
+    std::string result;
+
+    switch (type)
+    {
+    case JsonElement::BOOL:
+        result = *elem.boolElem ? "true" : "false";
+        break;
+
+    case JsonElement::INT:
+        result = std::to_string(*elem.intElem);
+        break;
+
+    case JsonElement::DOUBLE:
+        result = std::to_string(*elem.doubleElem);
+        break;
+
+    case JsonElement::STRING:
+        result = *elem.strElem;
+        break;
+
+    case JsonElement::ARRAY:
+    {
+        result += "[";
+        std::vector<JsonElement>::const_iterator begin = elem.arrayElem->begin(),
+                                                 end = elem.arrayElem->end();
+
+        while (begin != end)
+        {
+            result += (*begin).toString();
+            if (begin + 1 != end)
+            {
+                result += ", ";
+            }
+
+            begin++;
+        }
+
+        result += "]";
+
+        break;
+    }
+
+    case JsonElement::OBJECT:
+    {
+
+        result += "{";
+
+        std::unordered_map<std::string, JsonElement>::const_iterator begin = elem.objectElem->begin(),
+                                                                     end = elem.objectElem->end();
+
+        while (begin != end)
+        {
+            result += "\"" + (*begin).first + "\": " + (*begin).second.toString() + ", ";
+            begin++;
+        }
+
+        result += "}";
+
+        break;
+    }
+
+    case JsonElement::JSON_NULL:
+        result = "null";
+        break;
+    }
+
+    return result;
+}
+
 JSON::JsonElement &JSON::JsonElement::operator=(const JsonElement &other)
 {
     if (this == &other)
@@ -134,6 +205,7 @@ namespace JSON
 {
     std::ostream &operator<<(std::ostream &out, const JSON::JsonElement &elem)
     {
+        /*
         switch (elem.type)
         {
         case JSON::JsonElement::BOOL:
@@ -175,6 +247,9 @@ namespace JSON
             out << "Null";
         }
         }
+        */
+
+        out << elem.toString();
 
         return out;
     }
