@@ -125,8 +125,13 @@ std::string JSON::JsonElement::toString() const
 
         while (begin != end)
         {
-            result += "\"" + (*begin).first + "\": " + (*begin).second.toString() + ", ";
+            result += "\"" + (*begin).first + "\": " + (*begin).second.toString();
             begin++;
+
+            if (begin != end)
+            {
+                result += ", ";
+            }
         }
 
         result += "}";

@@ -30,6 +30,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
             elem = parser.Parse(strIter, endIter, &squareBracketCounter);
 
+            goto finish;
+
             break;
         }
         case '{':
@@ -41,6 +43,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
             ObjectParser parser;
 
             elem = parser.Parse(strIter, endIter);
+
+            goto finish;
 
             break;
         }
@@ -55,6 +59,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
             elem = p.Parse(strIter, endIter);
 
+            goto finish;
+
             break;
         }
         // true
@@ -66,6 +72,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
             elem = p.Parse(strIter, endIter);
 
+            goto finish;
+
             break;
         }
         case 'n':
@@ -73,6 +81,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
             NullParser p;
 
             elem = p.Parse(strIter, endIter);
+
+            goto finish;
 
             break;
         }
@@ -86,11 +96,14 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
                 NumberParser p;
 
                 elem = p.Parse(strIter, endIter);
+
+                goto finish;
             }
             break;
         }
     }
 
+finish:
     return JSON::JSONDocument(elem);
 }
 
