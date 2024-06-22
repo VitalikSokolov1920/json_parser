@@ -12,6 +12,7 @@ class JsonElement
 public:
     enum TYPE
     {
+        NOT_SET,
         BOOL,
         INT,
         DOUBLE,
@@ -47,7 +48,10 @@ public:
     JsonElement(const std::string &);
     JsonElement(const std::vector<JsonElement> &);
     JsonElement(const std::unordered_map<std::string, JsonElement> &);
+    JsonElement(const JsonElement &);
+    JsonElement &operator=(const JsonElement &);
     friend std::ostream &operator<<(std::ostream &out, const JsonElement &elem);
+    virtual ~JsonElement();
 };
 
 #endif

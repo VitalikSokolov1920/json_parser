@@ -2,6 +2,24 @@
 
 #include "base_elements/JsonElement.hpp"
 
+/*
+switch (type)
+        {
+        case BOOL:
+            break;
+        case INT:
+            break;
+        case DOUBLE:
+            break;
+        case STRING:
+            break;
+        case ARRAY:
+            break;
+        case OBJECT:
+            break;
+        }
+*/
+
 JsonElement::JsonElement(const bool &v)
 {
     this->type = BOOL;
@@ -37,6 +55,73 @@ JsonElement::JsonElement(const std::unordered_map<std::string, JsonElement> &obj
     this->type = OBJECT;
     this->elem.objectElem = new std::unordered_map<std::string, JsonElement>(object);
 }
+
+JsonElement::JsonElement(const JsonElement &other)
+{
+    type = NOT_SET;
+
+    *this = other;
+}
+
+JsonElement &JsonElement::operator=(const JsonElement &other)
+{
+    if (this == &other)
+    {
+        return *this;
+    }
+
+    if (type != NOT_SET)
+    {
+        switch (type)
+        {
+        case BOOL:
+            delete elem.boolElem;
+            break;
+        case INT:
+            delete elem.intElem;
+            break;
+        case DOUBLE:
+            delete elem.doubleElem;
+            break;
+        case STRING:
+            delete elem.strElem;
+            break;
+        case ARRAY:
+            delete elem.arrayElem;
+            break;
+        case OBJECT:
+            delete elem.objectElem;
+            break;
+        }
+    }
+
+    type = other.type;
+
+    switch (type)
+    {
+    case BOOL:
+        elem.boolElem = new bool{*other.elem.boolElem};
+        break;
+    case INT:
+        elem.intElem = new int{*other.elem.intElem};
+        break;
+    case DOUBLE:
+        elem.doubleElem = new double{*other.elem.doubleElem};
+        break;
+    case STRING:
+        elem.strElem = new std::string{*other.elem.strElem};
+        break;
+    case ARRAY:
+        elem.arrayElem = new std::vector<JsonElement>(*other.elem.arrayElem);
+        break;
+    case OBJECT:
+        elem.objectElem = new std::unordered_map<std::string, JsonElement>(*other.elem.objectElem);
+        break;
+    }
+
+    return *this;
+}
+
 std::ostream &operator<<(std::ostream &out, const JsonElement &elem)
 {
     switch (elem.type)
@@ -78,4 +163,32 @@ std::ostream &operator<<(std::ostream &out, const JsonElement &elem)
     }
 
     return out;
+}
+
+JsonElement::~JsonElement()
+{
+    if (type != NOT_SET)
+    {
+        switch (type)
+        {
+        case BOOL:
+            delete elem.boolElem;
+            break;
+        case INT:
+            delete elem.intElem;
+            break;
+        case DOUBLE:
+            delete elem.doubleElem;
+            break;
+        case STRING:
+            delete elem.strElem;
+            break;
+        case ARRAY:
+            delete elem.arrayElem;
+            break;
+        case OBJECT:
+            delete elem.objectElem;
+            break;
+        }
+    }
 }
