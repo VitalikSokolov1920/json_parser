@@ -6,6 +6,7 @@
 #include "parsers/StringParser.hpp"
 #include "parsers/BoolParser.hpp"
 #include "parsers/NumberParser.hpp"
+#include "parsers/NullParser.hpp"
 
 #include <iostream>
 
@@ -65,6 +66,14 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         case 'f':
         {
             BoolParser p;
+
+            auto elem = p.Parse(strIter, endIter);
+
+            break;
+        }
+        case 'n':
+        {
+            NullParser p;
 
             auto elem = p.Parse(strIter, endIter);
 

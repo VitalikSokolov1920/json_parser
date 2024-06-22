@@ -5,10 +5,11 @@
 #include "parsers/ArrayParser.hpp"
 #include "parsers/NumberParser.hpp"
 #include "parsers/BoolParser.hpp"
+#include "parsers/NullParser.hpp"
 
 JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
-                                 std::string::const_iterator &end,
-                                 int *, int *)
+                                std::string::const_iterator &end,
+                                int *, int *)
 {
     std::unordered_map<std::string, JsonElement> object;
     bool hasFieldName = false;
@@ -29,6 +30,7 @@ JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
                 begin++;
                 continue;
             }
+
             BoolParser parser;
 
             auto elem = parser.Parse(begin, end);
@@ -39,6 +41,27 @@ JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
 
             break;
         }
+
+        case 'n':
+        {
+            if (!hasFieldName)
+            {
+                // TODO: обработать ошибку
+                begin++;
+                continue;
+            }
+
+            NullParser p;
+
+            auto elem = p.Parse(begin, end);
+
+            object[curFieldName] = elem;
+
+            hasFieldName = false;
+
+            break;
+        }
+
         case '"':
         {
             begin++;
@@ -61,6 +84,7 @@ JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
 
             break;
         }
+
         case '[':
         {
             begin++;
@@ -81,6 +105,7 @@ JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
 
             break;
         }
+
         case '{':
         {
             begin++;
@@ -98,10 +123,12 @@ JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
 
             break;
         }
+
         case '}':
             begin++;
 
             return object;
+
         default:
             if (*begin >= '0' && *begin <= '9')
             {

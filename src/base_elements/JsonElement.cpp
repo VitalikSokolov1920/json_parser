@@ -168,6 +168,10 @@ std::ostream &operator<<(std::ostream &out, const JsonElement &elem)
 
         break;
     }
+    case JsonElement::JSON_NULL:
+    {
+        out << "Null";
+    }
     }
 
     return out;

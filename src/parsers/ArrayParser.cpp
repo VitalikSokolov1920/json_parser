@@ -7,6 +7,7 @@
 #include "parsers/StringParser.hpp"
 #include "parsers/BoolParser.hpp"
 #include "parsers/ObjectParser.hpp"
+#include "parsers/NullParser.hpp"
 
 JsonElement ArrayParser::Parse(
     std::string::const_iterator &begin,
@@ -43,6 +44,17 @@ JsonElement ArrayParser::Parse(
             break;
         }
 
+        case 'n':
+        {
+            NullParser p;
+
+            auto elem = p.Parse(begin, end);
+
+            array.push_back(elem);
+
+            break;
+        }
+
         case '"':
         {
             begin++;
@@ -57,6 +69,7 @@ JsonElement ArrayParser::Parse(
 
             break;
         }
+
         case '[':
         {
             begin++;
@@ -70,6 +83,7 @@ JsonElement ArrayParser::Parse(
 
             break;
         }
+
         case '{':
         {
             begin++;
@@ -82,12 +96,14 @@ JsonElement ArrayParser::Parse(
 
             break;
         }
+
         case ']':
         {
             begin++;
 
             return array;
         }
+
         default:
         {
             if (*begin >= '0' && *begin <= '9')

@@ -13,7 +13,8 @@ ifeq ($(OS), Windows_NT)
 		src\parsers\NumberParser.o \
 		src\parsers\StringParser.o \
 		src\parsers\ObjectParser.o \
-		src\parsers\BoolParser.o
+		src\parsers\BoolParser.o \
+		src\parsers\NullParser.o
 else
 	TARGET=$(TARGET_PREFIX)so
 	DEL_CMD=rm -f
@@ -27,7 +28,8 @@ else
 		src/parsers/NumberParser.o \
 		src/parsers/StringParser.o \
 		src/parsers/ObjectParser.o \
-		src/parsers/BoolParser.o
+		src/parsers/BoolParser.o \
+		src/parsers/NullParser.o
 endif
 
 LDFLAGS=-shared -ggdb -g -O0 -Werror
