@@ -4,11 +4,7 @@
 
 #include "parsers/NumberParser.hpp"
 
-NumberParser::NumberParser()
-{
-}
-
-JsonElement NumberParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
+JSON::JsonElement JSON::NumberParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
 {
     if (*begin >= '0' && (*begin) <= '9')
     {

@@ -1,16 +1,16 @@
 #include "parsers/AbstractParser.hpp"
 
-void AbstractParser::setError(std::string error)
+void JSON::AbstractParser::setError(std::string error)
 {
     err = error;
     hasErr = true;
 }
-std::string AbstractParser::error() const
+std::string JSON::AbstractParser::error() const
 {
     return err;
 }
 
-bool AbstractParser::hasError() const
+bool JSON::AbstractParser::hasError() const
 {
     return hasErr;
 }

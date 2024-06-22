@@ -22,56 +22,56 @@ switch (type)
         }
 */
 
-JsonElement::JsonElement(const bool &v)
+JSON::JsonElement::JsonElement(const bool &v)
 {
     type = BOOL;
     elem.boolElem = new bool{v};
 }
 
-JsonElement::JsonElement(const int &v)
+JSON::JsonElement::JsonElement(const int &v)
 {
     type = INT;
     elem.intElem = new int{v};
 }
 
-JsonElement::JsonElement(const double &v)
+JSON::JsonElement::JsonElement(const double &v)
 {
     type = DOUBLE;
     elem.doubleElem = new double{v};
 }
 
-JsonElement::JsonElement(const std::string &v)
+JSON::JsonElement::JsonElement(const std::string &v)
 {
     type = STRING;
     elem.strElem = new std::string{v};
 }
 
-JsonElement::JsonElement(const std::vector<JsonElement> &v)
+JSON::JsonElement::JsonElement(const std::vector<JsonElement> &v)
 {
     type = ARRAY;
     elem.arrayElem = new std::vector<JsonElement>(v);
 }
 
-JsonElement::JsonElement(const std::unordered_map<std::string, JsonElement> &object)
+JSON::JsonElement::JsonElement(const std::unordered_map<std::string, JsonElement> &object)
 {
     type = OBJECT;
     elem.objectElem = new std::unordered_map<std::string, JsonElement>(object);
 }
 
-JsonElement::JsonElement(void *null)
+JSON::JsonElement::JsonElement(void *null)
 {
     type = JSON_NULL;
     elem.null = nullptr;
 }
 
-JsonElement::JsonElement(const JsonElement &other)
+JSON::JsonElement::JsonElement(const JsonElement &other)
 {
     type = NOT_SET;
 
     *this = other;
 }
 
-JsonElement &JsonElement::operator=(const JsonElement &other)
+JSON::JsonElement &JSON::JsonElement::operator=(const JsonElement &other)
 {
     if (this == &other)
     {
@@ -130,54 +130,58 @@ JsonElement &JsonElement::operator=(const JsonElement &other)
     return *this;
 }
 
-std::ostream &operator<<(std::ostream &out, const JsonElement &elem)
+namespace JSON
 {
-    switch (elem.type)
+    std::ostream &operator<<(std::ostream &out, const JSON::JsonElement &elem)
     {
-    case JsonElement::BOOL:
-        out << "Boolean: " << *elem.elem.boolElem;
-        break;
-    case JsonElement::INT:
-        out << "Interger: " << *elem.elem.intElem;
-        break;
-    case JsonElement::DOUBLE:
-        out << "Double: " << *elem.elem.doubleElem;
-        break;
-    case JsonElement::STRING:
-        out << "String: " << *elem.elem.strElem;
-        break;
-    case JsonElement::ARRAY:
-    {
-        auto iter = elem.elem.arrayElem->begin();
-
-        out << "Array:\n";
-        for (; iter != elem.elem.arrayElem->end(); iter++)
+        switch (elem.type)
         {
-            out << *iter << std::endl;
-        }
-        break;
-    }
-
-    case JsonElement::OBJECT:
-    {
-        for (auto iter = elem.elem.objectElem->begin(); iter != elem.elem.objectElem->end(); iter++)
+        case JSON::JsonElement::BOOL:
+            out << "Boolean: " << *elem.elem.boolElem;
+            break;
+        case JSON::JsonElement::INT:
+            out << "Interger: " << *elem.elem.intElem;
+            break;
+        case JSON::JsonElement::DOUBLE:
+            out << "Double: " << *elem.elem.doubleElem;
+            break;
+        case JSON::JsonElement::STRING:
+            out << "String: " << *elem.elem.strElem;
+            break;
+        case JSON::JsonElement::ARRAY:
         {
-            std::cout << "Property: " << iter->first << std::endl;
-            std::cout << "Value: " << iter->second << std::endl;
+            auto iter = elem.elem.arrayElem->begin();
+
+            out << "Array:\n";
+            for (; iter != elem.elem.arrayElem->end(); iter++)
+            {
+                out << *iter << std::endl;
+            }
+            break;
         }
 
-        break;
-    }
-    case JsonElement::JSON_NULL:
-    {
-        out << "Null";
-    }
+        case JSON::JsonElement::OBJECT:
+        {
+            for (auto iter = elem.elem.objectElem->begin(); iter != elem.elem.objectElem->end(); iter++)
+            {
+                std::cout << "Property: " << iter->first << std::endl;
+                std::cout << "Value: " << iter->second << std::endl;
+            }
+
+            break;
+        }
+        case JSON::JsonElement::JSON_NULL:
+        {
+            out << "Null";
+        }
+        }
+
+        return out;
     }
 
-    return out;
 }
 
-JsonElement::~JsonElement()
+JSON::JsonElement::~JsonElement()
 {
     if (type != NOT_SET)
     {

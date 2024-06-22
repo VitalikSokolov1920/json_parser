@@ -1,4 +1,5 @@
 TARGET_PREFIX=libjsonparser.
+TEST_TAGET=test
 
 ifeq ($(OS), Windows_NT)
 	TARGET=$(TARGET_PREFIX)dll
@@ -42,13 +43,13 @@ all: clean_all $(SOURCES)
 	$(CC) $(LDFLAGS) $(SOURCES) -o $(TARGET)
 
 test: all
-	$(CC) test.cpp -o test -L. -ljsonparser -Iinclude
+	$(CC) test.cpp -o $(TEST_TAGET) -L. -ljsonparser -Iinclude
 
 %.o: %.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
 clean_all: clean
-	$(DEL_CMD) $(TARGET)
+	$(DEL_CMD) $(TARGET) $(TEST_TAGET)
 
 clean:
 	$(DEL_CMD) $(SOURCES)

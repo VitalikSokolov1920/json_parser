@@ -7,9 +7,9 @@
 #include "parsers/BoolParser.hpp"
 #include "parsers/NullParser.hpp"
 
-JsonElement ObjectParser::Parse(std::string::const_iterator &begin,
-                                std::string::const_iterator &end,
-                                int *, int *)
+JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
+                                            std::string::const_iterator &end,
+                                            int *, int *)
 {
     std::unordered_map<std::string, JsonElement> object;
     bool hasFieldName = false;

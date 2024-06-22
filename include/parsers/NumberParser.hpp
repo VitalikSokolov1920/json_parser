@@ -4,11 +4,14 @@
 #include "base_elements/JsonElement.hpp"
 #include "parsers/AbstractParser.hpp"
 
-class NumberParser : AbstractParser
+namespace JSON
 {
-public:
-    NumberParser();
-    JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
-};
+    class NumberParser : AbstractParser
+    {
+    public:
+        NumberParser() = default;
+        JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
+    };
+}
 
 #endif

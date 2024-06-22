@@ -1,6 +1,6 @@
 #include "parsers/NullParser.hpp"
 
-JsonElement NullParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
+JSON::JsonElement JSON::NullParser::Parse(std::string::const_iterator &begin, std::string::const_iterator &end, int *, int *)
 {
     char prev;
     short lSymbolCounter = 0;

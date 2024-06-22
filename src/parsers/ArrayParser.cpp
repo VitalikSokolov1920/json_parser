@@ -9,7 +9,7 @@
 #include "parsers/ObjectParser.hpp"
 #include "parsers/NullParser.hpp"
 
-JsonElement ArrayParser::Parse(
+JSON::JsonElement JSON::ArrayParser::Parse(
     std::string::const_iterator &begin,
     std::string::const_iterator &end,
     int *squareBracketCounter,

@@ -6,10 +6,13 @@
 #include "parsers/AbstractParser.hpp"
 #include "base_elements/JsonElement.hpp"
 
-class ArrayParser : AbstractParser
+namespace JSON
 {
-public:
-    JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
-};
+    class ArrayParser : AbstractParser
+    {
+    public:
+        JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
+    };
+}
 
 #endif
