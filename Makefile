@@ -1,9 +1,9 @@
 TARGET_PREFIX=libjsonparser.
-TEST_TAGET=test
 
 ifeq ($(OS), Windows_NT)
 	TARGET=$(TARGET_PREFIX)dll
 	DEL_CMD=del
+	TEST_TAGET=test.exe
 	SOURCES=src\parsers\JSONParser.o \
 		src\JSONFileReader.o \
 		src\JSONExceptions.o \
@@ -19,6 +19,7 @@ ifeq ($(OS), Windows_NT)
 else
 	TARGET=$(TARGET_PREFIX)so
 	DEL_CMD=rm -f
+	TEST_TAGET=test
 	SOURCES=src/parsers/JSONParser.o \
 		src/JSONFileReader.o \
 		src/JSONExceptions.o \
