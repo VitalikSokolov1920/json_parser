@@ -19,6 +19,12 @@ int main(int argc, char *argv[])
     {
         std::cout << "\n\n\nResult: " << result["b"] << std::endl;
     }
+    catch (const JSON::JSONException::BaseException &e)
+    {
+        std::cerr << e.what() << std::endl;
+
+        return -1;
+    }
     catch (const JSON::JSONException::UnsupportedConvertion &e)
     {
         std::cerr << e.what() << std::endl;

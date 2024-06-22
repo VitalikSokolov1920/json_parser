@@ -1,3 +1,9 @@
+{
+    "objectNumber": 3,
+    "a": 10,
+    "b": "hello",
+    "c": null
+}
 [
     [
         123,
