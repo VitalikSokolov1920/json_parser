@@ -49,7 +49,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         case ',':
 
             break;
-        case '"': {
+        case '"':
+        {
             strIter++;
 
             StringParser p;
@@ -61,7 +62,8 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         // true
         case 't':
         // false
-        case 'f': {
+        case 'f':
+        {
             BoolParser p;
 
             auto elem = p.Parse(strIter, endIter);
@@ -73,6 +75,12 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
         // все неслужебные символы
         default:
+            if (*strIter >= '0' && *strIter <= '9')
+            {
+                NumberParser p;
+
+                auto elem = p.Parse(strIter, endIter);
+            }
             break;
         }
     }

@@ -18,7 +18,8 @@ public:
         DOUBLE,
         STRING,
         ARRAY,
-        OBJECT
+        OBJECT,
+        JSON_NULL,
     };
 
     union Element
@@ -29,6 +30,7 @@ public:
         std::string *strElem;
         std::vector<JsonElement> *arrayElem;
         std::unordered_map<std::string, JsonElement> *objectElem;
+        void *null;
     };
 
 private:
@@ -48,6 +50,7 @@ public:
     JsonElement(const std::string &);
     JsonElement(const std::vector<JsonElement> &);
     JsonElement(const std::unordered_map<std::string, JsonElement> &);
+    JsonElement(void *);
     JsonElement(const JsonElement &);
     JsonElement &operator=(const JsonElement &);
     friend std::ostream &operator<<(std::ostream &out, const JsonElement &elem);

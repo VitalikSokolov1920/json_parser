@@ -17,43 +17,51 @@ switch (type)
             break;
         case OBJECT:
             break;
+        case JSON_NULL:
+            break;
         }
 */
 
 JsonElement::JsonElement(const bool &v)
 {
-    this->type = BOOL;
-    this->elem.boolElem = new bool{v};
+    type = BOOL;
+    elem.boolElem = new bool{v};
 }
 
 JsonElement::JsonElement(const int &v)
 {
-    this->type = INT;
-    this->elem.intElem = new int{v};
+    type = INT;
+    elem.intElem = new int{v};
 }
 
 JsonElement::JsonElement(const double &v)
 {
-    this->type = DOUBLE;
-    this->elem.doubleElem = new double{v};
+    type = DOUBLE;
+    elem.doubleElem = new double{v};
 }
 
 JsonElement::JsonElement(const std::string &v)
 {
-    this->type = STRING;
-    this->elem.strElem = new std::string{v};
+    type = STRING;
+    elem.strElem = new std::string{v};
 }
 
 JsonElement::JsonElement(const std::vector<JsonElement> &v)
 {
-    this->type = ARRAY;
-    this->elem.arrayElem = new std::vector<JsonElement>(v);
+    type = ARRAY;
+    elem.arrayElem = new std::vector<JsonElement>(v);
 }
 
 JsonElement::JsonElement(const std::unordered_map<std::string, JsonElement> &object)
 {
-    this->type = OBJECT;
-    this->elem.objectElem = new std::unordered_map<std::string, JsonElement>(object);
+    type = OBJECT;
+    elem.objectElem = new std::unordered_map<std::string, JsonElement>(object);
+}
+
+JsonElement::JsonElement(void *null)
+{
+    type = JSON_NULL;
+    elem.null = nullptr;
 }
 
 JsonElement::JsonElement(const JsonElement &other)
