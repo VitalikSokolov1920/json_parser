@@ -15,7 +15,8 @@ ifeq ($(OS), Windows_NT)
 		src\parsers\StringParser.o \
 		src\parsers\ObjectParser.o \
 		src\parsers\BoolParser.o \
-		src\parsers\NullParser.o
+		src\parsers\NullParser.o \
+		src\config\Config.o
 else
 	TARGET=$(TARGET_PREFIX)so
 	DEL_CMD=rm -f
@@ -31,7 +32,8 @@ else
 		src/parsers/StringParser.o \
 		src/parsers/ObjectParser.o \
 		src/parsers/BoolParser.o \
-		src/parsers/NullParser.o
+		src/parsers/NullParser.o \
+		src/config/Config.o
 endif
 
 LDFLAGS=-shared -ggdb -g -O0 -Werror
