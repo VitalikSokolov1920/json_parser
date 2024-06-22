@@ -1,16 +1,53 @@
 #include <cstdlib>
+#include <iostream>
 
 #include "JSONResult.hpp"
 #include "JSONExceptions.hpp"
 
-JSON::JsonElement JSON::JSONDocument::operator[](std::string)
+JSON::JsonElement JSON::JSONDocument::operator[](std::string property)
 {
-    return JsonElement();
+    if (elem.Type() != JsonElement::OBJECT)
+    {
+        throw JSONException::UnsupportedIndexOperation(elem, property);
+    }
+
+    if (elem.Elem().objectElem->find(property) == elem.Elem().objectElem->end())
+    {
+        throw JSONException::PropertyNotExist(elem, property);
+    }
+
+    return (*elem.Elem().objectElem)[property];
 }
 
-JSON::JsonElement JSON::JSONDocument::operator[](int)
+JSON::JsonElement JSON::JSONDocument::operator[](int index)
 {
-    return JsonElement();
+    switch (elem.Type())
+    {
+    case JsonElement::BOOL:
+    case JsonElement::INT:
+    case JsonElement::DOUBLE:
+    case JsonElement::JSON_NULL:
+    case JsonElement::OBJECT:
+        throw JSONException::UnsupportedIndexOperation(elem, index);
+        break;
+    case JsonElement::STRING:
+        if (index >= elem.Elem().strElem->length())
+        {
+            throw JSONException::IndexOutOfRange(elem, index);
+        }
+
+        return (*elem.Elem().strElem)[index];
+    case JsonElement::ARRAY:
+
+        if (index >= elem.Elem().arrayElem->size())
+        {
+            throw JSONException::IndexOutOfRange(elem, index);
+        }
+
+        return (*elem.Elem().arrayElem)[index];
+    }
+
+    return elem;
 }
 
 std::string JSON::JSONDocument::toString()

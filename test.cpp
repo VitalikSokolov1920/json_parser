@@ -17,9 +17,21 @@ int main(int argc, char *argv[])
 
     try
     {
-        std::cout << result.toBool() << std::endl;
+        std::cout << "\n\n\nResult: " << result["b"] << std::endl;
     }
     catch (const JSON::JSONException::UnsupportedConvertion &e)
+    {
+        std::cerr << e.what() << std::endl;
+
+        return -1;
+    }
+    catch (const JSON::JSONException::IndexOutOfRange &e)
+    {
+        std::cerr << e.what() << std::endl;
+
+        return -1;
+    }
+    catch (const JSON::JSONException::PropertyNotExist &e)
     {
         std::cerr << e.what() << std::endl;
 

@@ -41,7 +41,7 @@ namespace JSON
         JsonElement::Element elem;
 
     public:
-        JsonElement::Element &Elem()
+        const JsonElement::Element &Elem() const
         {
             return elem;
         }

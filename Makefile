@@ -48,6 +48,9 @@ all: clean_all $(SOURCES)
 test: all
 	$(CC) test.cpp -o $(TEST_TAGET) -L. -ljsonparser -Iinclude
 
+test_only:
+	$(CC) test.cpp -o $(TEST_TAGET) -L. -ljsonparser -Iinclude
+
 %.o: %.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
