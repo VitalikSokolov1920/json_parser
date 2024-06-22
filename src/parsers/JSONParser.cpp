@@ -121,7 +121,7 @@ void JSON::JSONParser::setJSONString(const std::string &jsonString)
 
 JSON::JSONDocument JSON::JSONParser::parse()
 {
-    if (!fileReader.isOpen())
+    if (inputType == FILE && !fileReader.isOpen())
     {
         throw JSON::JSONException::InvalidOpenFileException("File is not open");
     }
@@ -136,8 +136,7 @@ JSON::JSONDocument JSON::JSONParser::parse()
 
         fileReader >> input;
 
-        std::cout << input;
-        std::cout << std::endl;
+        std::cout << input << std::endl;
 
         parseJsonString(input);
 
@@ -145,6 +144,8 @@ JSON::JSONDocument JSON::JSONParser::parse()
     }
     case STRING:
     {
+        parseJsonString(jsonString);
+
         break;
     }
     default:
