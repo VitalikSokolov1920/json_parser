@@ -31,7 +31,7 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
                 continue;
             }
 
-            BoolParser parser;
+            BoolParser parser(config);
 
             auto elem = parser.Parse(begin, end);
 
@@ -51,7 +51,7 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
                 continue;
             }
 
-            NullParser p;
+            NullParser p(config);
 
             auto elem = p.Parse(begin, end);
 
@@ -66,7 +66,7 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
         {
             begin++;
 
-            StringParser parser;
+            StringParser parser(config);
 
             auto elem = parser.Parse(begin, end);
             // парсим значение
@@ -95,7 +95,7 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
                 continue;
             }
 
-            ArrayParser parser;
+            ArrayParser parser(config);
 
             auto elem = parser.Parse(begin, end);
 
@@ -115,11 +115,13 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
                 // TODO: обработать ошибку
                 continue;
             }
-            ObjectParser parser;
+            ObjectParser parser(config);
 
             auto elem = parser.Parse(begin, end);
 
             object[curFieldName] = elem;
+
+            hasFieldName = false;
 
             break;
         }
@@ -138,7 +140,7 @@ JSON::JsonElement JSON::ObjectParser::Parse(std::string::const_iterator &begin,
                     begin++;
                     continue;
                 }
-                NumberParser parser;
+                NumberParser parser(config);
 
                 auto elem = parser.Parse(begin, end);
 

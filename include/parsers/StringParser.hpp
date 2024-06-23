@@ -5,13 +5,15 @@
 
 #include "base_elements/JsonElement.hpp"
 #include "parsers/AbstractParser.hpp"
+#include "config/Config.hpp"
 
 namespace JSON
 {
     class StringParser : AbstractParser
     {
     public:
-        StringParser() = default;
+        StringParser(Config *config) : AbstractParser(config) {}
+
         JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
     };
 }

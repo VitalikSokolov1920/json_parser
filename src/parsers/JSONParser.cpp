@@ -26,9 +26,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
             strIter++;
 
-            ArrayParser parser;
+            ArrayParser parser(config);
 
-            elem = parser.Parse(strIter, endIter, &squareBracketCounter);
+            elem = parser.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
             goto finish;
 
@@ -40,9 +40,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
 
             strIter++;
 
-            ObjectParser parser;
+            ObjectParser parser(config);
 
-            elem = parser.Parse(strIter, endIter);
+            elem = parser.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
             goto finish;
 
@@ -55,9 +55,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         {
             strIter++;
 
-            StringParser p;
+            StringParser p(config);
 
-            elem = p.Parse(strIter, endIter);
+            elem = p.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
             goto finish;
 
@@ -68,9 +68,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         // false
         case 'f':
         {
-            BoolParser p;
+            BoolParser p(config);
 
-            elem = p.Parse(strIter, endIter);
+            elem = p.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
             goto finish;
 
@@ -78,9 +78,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         }
         case 'n':
         {
-            NullParser p;
+            NullParser p(config);
 
-            elem = p.Parse(strIter, endIter);
+            elem = p.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
             goto finish;
 
@@ -93,9 +93,9 @@ JSON::JSONDocument JSON::JSONParser::parseJsonString(const std::string &input)
         default:
             if (*strIter >= '0' && *strIter <= '9')
             {
-                NumberParser p;
+                NumberParser p(config);
 
-                elem = p.Parse(strIter, endIter);
+                elem = p.Parse(strIter, endIter, &squareBracketCounter, &curlyBracketCounter);
 
                 goto finish;
             }
@@ -108,12 +108,12 @@ finish:
 }
 
 JSON::JSONParser::JSONParser(const JSON::JSONFileReader &fileReader)
-    : fileReader(fileReader), jsonString(""), inputType(FILE)
+    : fileReader(fileReader), jsonString(""), inputType(FILE), AbstractParser(nullptr)
 {
 }
 
 JSON::JSONParser::JSONParser(const std::string &jsonString)
-    : jsonString(jsonString), inputType(STRING)
+    : jsonString(jsonString), inputType(STRING), AbstractParser(nullptr)
 {
 }
 
@@ -136,34 +136,25 @@ JSON::JSONDocument JSON::JSONParser::parse()
         throw JSON::JSONException::InvalidOpenFileException("File is not open");
     }
 
-    switch (inputType)
+    if (inputType == FILE)
     {
-    case FILE:
+        fileReader >> jsonString;
+    }
+
+    std::cout << "Input string: \n"
+              << jsonString << std::endl;
+
+    if (!config)
     {
-        std::string input;
-
-        fileReader >> input;
-
-        std::cout << "Input string: \n"
-                  << input << std::endl;
-
-        return JSON::JSONDocument(parseJsonString(input));
-
-        break;
+        config = new Config(jsonString.cend(), jsonString.crend());
     }
-    case STRING:
+    else
     {
-        std::cout << "Input string: \n"
-                  << jsonString << std::endl;
-
-        return JSON::JSONDocument(parseJsonString(jsonString));
-
-        break;
+        config->setAfterEnd(jsonString.cend());
+        config->setBeforeBegin(jsonString.crend());
     }
-    default:
-        return JSON::JSONDocument(parseJsonString(jsonString));
-        break;
-    }
+
+    return JSON::JSONDocument(parseJsonString(jsonString));
 }
 
 JSON::JSONDocument JSON::JSONParser::nextToken()

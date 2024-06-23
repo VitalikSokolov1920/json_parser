@@ -35,7 +35,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
         // false
         case 'f':
         {
-            BoolParser parser;
+            BoolParser parser(config);
 
             auto elem = parser.Parse(begin, end);
 
@@ -46,7 +46,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
 
         case 'n':
         {
-            NullParser p;
+            NullParser p(config);
 
             auto elem = p.Parse(begin, end);
 
@@ -59,7 +59,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
         {
             begin++;
 
-            StringParser parser;
+            StringParser parser(config);
 
             auto strStr = parser.Parse(begin, end);
 
@@ -74,7 +74,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
         {
             begin++;
 
-            ArrayParser parser;
+            ArrayParser parser(config);
 
             // TODO: подумать, что передавать в качестве счётчика [ (innerSquareBracketCounter или squareBracketCounter)
             auto arrayElem = parser.Parse(begin, end);
@@ -88,7 +88,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
         {
             begin++;
 
-            ObjectParser parser;
+            ObjectParser parser(config);
 
             auto elem = parser.Parse(begin, end);
 
@@ -108,7 +108,7 @@ JSON::JsonElement JSON::ArrayParser::Parse(
         {
             if (*begin >= '0' && *begin <= '9')
             {
-                NumberParser numParser;
+                NumberParser numParser(config);
 
                 auto number = numParser.Parse(begin, end, squareBracketCounter);
 

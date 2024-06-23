@@ -62,7 +62,7 @@ size_t JSON::JSONFileReader::read(std::string &out, size_t max)
 
             counter++;
 
-            if (ch != '\n' && ch != ' ')
+            if (ch != '\n' && ch != '\r' && ch != ' ')
             {
                 out += ch;
             }

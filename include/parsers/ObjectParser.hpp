@@ -6,15 +6,14 @@
 
 #include "base_elements/JsonElement.hpp"
 #include "parsers/AbstractParser.hpp"
+#include "config/Config.hpp"
 
 namespace JSON
 {
     class ObjectParser : AbstractParser
     {
-        // std::unordered_map<std::string, JsonElement> fields;
-
     public:
-        ObjectParser() = default;
+        ObjectParser(Config *config) : AbstractParser(config) {}
 
         JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr);
     };

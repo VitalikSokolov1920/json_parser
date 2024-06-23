@@ -1,6 +1,6 @@
 #include "parsers/AbstractParser.hpp"
 
-void JSON::AbstractParser::setError(std::string error)
+void JSON::AbstractParser::setError(const std::string &error, std::string::const_iterator curIter, int maxSymbols)
 {
     err = error;
     hasErr = true;

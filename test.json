@@ -1,9 +1,3 @@
-{
-    "objectNumber": 3,
-    "a": 10,
-    "b": "hello",
-    "c": null
-}
 [
     [
         123,
@@ -33,7 +27,15 @@
         "objectNumber": 1,
         "a": 10,
         "b": "hello",
-        "c": null
+        "c": {
+            "objectNumber": 3,
+            "a": {
+                "innerA": 10,
+                "innerB": "innerHello"
+            },
+            "b": "hello",
+            "c": null
+        }
     },
     {
         "objectNumber": 2,

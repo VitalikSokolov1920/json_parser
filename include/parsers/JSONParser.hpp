@@ -47,10 +47,12 @@
 
 #include "JSONFileReader.hpp"
 #include "JSONResult.hpp"
+#include "parsers/AbstractParser.hpp"
+#include "config/Config.hpp"
 
 namespace JSON
 {
-    class JSONParser
+    class JSONParser : AbstractParser
     {
         enum SOURCE_TYPE
         {
@@ -62,8 +64,11 @@ namespace JSON
         JSONParser::SOURCE_TYPE inputType;
 
         JSON::JSONDocument parseJsonString(const std::string &input);
+        JsonElement Parse(std::string::const_iterator &, std::string::const_iterator &, int * = nullptr, int * = nullptr)
+        {
+            return JsonElement(nullptr);
+        }
 
-        // int parseInt();
     public:
         JSONParser(const JSON::JSONFileReader &);
         JSONParser(const std::string &);
