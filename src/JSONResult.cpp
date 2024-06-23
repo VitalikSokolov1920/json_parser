@@ -4,7 +4,7 @@
 #include "JSONResult.hpp"
 #include "JSONExceptions.hpp"
 
-JSON::JsonElement JSON::JSONDocument::operator[](std::string property)
+JSON::JSONDocument JSON::JSONDocument::operator[](std::string property)
 {
     if (elem.Type() != JsonElement::OBJECT)
     {
@@ -16,10 +16,10 @@ JSON::JsonElement JSON::JSONDocument::operator[](std::string property)
         throw JSONException::PropertyNotExist(elem, property);
     }
 
-    return (*elem.Elem().objectElem)[property];
+    return JSONDocument((*elem.Elem().objectElem)[property]);
 }
 
-JSON::JsonElement JSON::JSONDocument::operator[](int index)
+JSON::JSONDocument JSON::JSONDocument::operator[](int index)
 {
     switch (elem.Type())
     {
@@ -36,7 +36,7 @@ JSON::JsonElement JSON::JSONDocument::operator[](int index)
             throw JSONException::IndexOutOfRange(elem, index);
         }
 
-        return (*elem.Elem().strElem)[index];
+        return JSONDocument((*elem.Elem().strElem)[index]);
     case JsonElement::ARRAY:
 
         if (index >= elem.Elem().arrayElem->size())
@@ -44,10 +44,10 @@ JSON::JsonElement JSON::JSONDocument::operator[](int index)
             throw JSONException::IndexOutOfRange(elem, index);
         }
 
-        return (*elem.Elem().arrayElem)[index];
+        return JSONDocument((*elem.Elem().arrayElem)[index]);
     }
 
-    return elem;
+    return JSONDocument(elem);
 }
 
 std::string JSON::JSONDocument::toString()

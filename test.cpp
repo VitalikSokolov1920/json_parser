@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     try
     {
-        std::cout << "\n\n\nResult: " << result["b"] << std::endl;
+        std::cout << "\n\n\nResult: " << result[0][10]["b"][0].toString() << std::endl;
     }
     catch (const JSON::JSONException::BaseException &e)
     {

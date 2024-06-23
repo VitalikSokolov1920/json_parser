@@ -15,8 +15,8 @@ namespace JSON
     public:
         JSONDocument(const JsonElement &elem) : elem(elem) {}
         // для получения значения свойства объекта
-        JsonElement operator[](std::string);
-        JsonElement operator[](int);
+        JSONDocument operator[](std::string);
+        JSONDocument operator[](int);
         std::string toString();
         int toInt();
         double toDouble();
