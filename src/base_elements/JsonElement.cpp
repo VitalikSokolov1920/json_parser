@@ -46,6 +46,12 @@ JSON::JsonElement::JsonElement(const std::string &v)
     elem.strElem = new std::string{v};
 }
 
+JSON::JsonElement::JsonElement(const char &v)
+{
+    type = STRING;
+    elem.strElem = new std::string{v};
+}
+
 JSON::JsonElement::JsonElement(const std::vector<JsonElement> &v)
 {
     type = ARRAY;

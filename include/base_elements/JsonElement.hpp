@@ -50,6 +50,7 @@ namespace JSON
         JsonElement(const int &);
         JsonElement(const double &);
         JsonElement(const std::string &);
+        JsonElement(const char &);
         JsonElement(const std::vector<JsonElement> &);
         JsonElement(const std::unordered_map<std::string, JsonElement> &);
         JsonElement(void *);

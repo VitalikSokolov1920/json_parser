@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
 
     try
     {
-        std::cout << "\n\n\nResult: " << result[0][10]["b"][0].toString() << std::endl;
+        bool ok;
+        std::cout << "\n\n\nResult: " << result[0][10]["b"].toInt(&ok) + 200 << " convertion " << (ok ? "success" : "fail") << std::endl;
     }
     catch (const JSON::JSONException::BaseException &e)
     {

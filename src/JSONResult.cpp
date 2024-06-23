@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 
 #include "JSONResult.hpp"
 #include "JSONExceptions.hpp"
@@ -55,7 +56,7 @@ std::string JSON::JSONDocument::toString()
     return elem.toString();
 }
 
-int JSON::JSONDocument::toInt()
+int JSON::JSONDocument::toInt(bool *ok)
 {
     int value;
 
@@ -71,8 +72,15 @@ int JSON::JSONDocument::toInt()
         value = *elem.Elem().doubleElem;
         break;
     case JsonElement::STRING:
-        value = ::atoi(elem.Elem().strElem->c_str());
+    {
+        std::istringstream stream(*elem.Elem().strElem);
+
+        stream >> value;
+
+        if (ok)
+            *ok = !stream.fail();
         break;
+    }
     case JsonElement::ARRAY:
         throw JSONException::UnsupportedConvertion(elem, "Array");
         break;
@@ -85,6 +93,11 @@ int JSON::JSONDocument::toInt()
     }
 
     return value;
+}
+
+long toLong(bool *ok)
+{
+    return 0;
 }
 
 double JSON::JSONDocument::toDouble()

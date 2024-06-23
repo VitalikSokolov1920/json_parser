@@ -18,7 +18,8 @@ namespace JSON
         JSONDocument operator[](std::string);
         JSONDocument operator[](int);
         std::string toString();
-        int toInt();
+        int toInt(bool * = nullptr);
+        long toLong(bool * = nullptr);
         double toDouble();
         bool toBool();
         // virtual void setArrayValue(std::string fieldName, std::vector<long long> vec) = 0;
