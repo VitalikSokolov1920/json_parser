@@ -56,110 +56,81 @@ std::string JSON::JSONDocument::toString()
     return elem.toString();
 }
 
-int JSON::JSONDocument::toInt(bool *ok)
+std::optional<int> JSON::JSONDocument::toInt()
 {
-    int value;
-
     switch (elem.Type())
     {
     case JsonElement::BOOL:
-        value = *elem.Elem().boolElem ? 1 : 0;
-        break;
+        return *elem.Elem().boolElem ? 1 : 0;
     case JsonElement::INT:
-        value = *elem.Elem().intElem;
-        break;
+        return *elem.Elem().intElem;
     case JsonElement::DOUBLE:
-        value = *elem.Elem().doubleElem;
-        break;
+        return *elem.Elem().doubleElem;
     case JsonElement::STRING:
     {
         std::istringstream stream(*elem.Elem().strElem);
 
+        int value;
+
         stream >> value;
 
-        if (ok)
-            *ok = !stream.fail();
-        break;
+        if (!stream.fail())
+        {
+            return value;
+        }
     }
-    case JsonElement::ARRAY:
-        throw JSONException::UnsupportedConvertion(elem, "Array");
-        break;
-    case JsonElement::OBJECT:
-        throw JSONException::UnsupportedConvertion(elem, "Object");
-        break;
-    case JsonElement::JSON_NULL:
-        value = 0;
-        break;
     }
 
-    return value;
+    return std::nullopt;
 }
 
-long toLong(bool *ok)
+std::optional<double> JSON::JSONDocument::toDouble()
 {
-    return 0;
-}
-
-double JSON::JSONDocument::toDouble()
-{
-    double value;
-
     switch (elem.Type())
     {
     case JsonElement::BOOL:
-        value = *elem.Elem().boolElem ? 1 : 0;
+        return *elem.Elem().boolElem ? 1 : 0;
         break;
     case JsonElement::INT:
-        value = *elem.Elem().intElem;
+        return *elem.Elem().intElem;
         break;
     case JsonElement::DOUBLE:
-        value = *elem.Elem().doubleElem;
+        return *elem.Elem().doubleElem;
         break;
     case JsonElement::STRING:
-        value = ::atof(elem.Elem().strElem->c_str());
-        break;
-    case JsonElement::ARRAY:
-        throw JSONException::UnsupportedConvertion(elem, "Array");
-        break;
-    case JsonElement::OBJECT:
-        throw JSONException::UnsupportedConvertion(elem, "Object");
-        break;
-    case JsonElement::JSON_NULL:
-        value = 0.0;
+    {
+        double value;
+
+        std::istringstream stream(*elem.Elem().strElem);
+
+        stream >> value;
+
+        if (!stream.fail())
+        {
+            return value;
+        }
         break;
     }
+    }
 
-    return value;
+    return std::nullopt;
 }
 
-bool JSON::JSONDocument::toBool()
+std::optional<bool> JSON::JSONDocument::toBool()
 {
-    bool result;
-
     switch (elem.Type())
     {
     case JsonElement::BOOL:
-        result = *elem.Elem().boolElem;
-        break;
+        return *elem.Elem().boolElem;
     case JsonElement::INT:
-        result = (*elem.Elem().intElem > 0);
-        break;
+        return (*elem.Elem().intElem > 0);
     case JsonElement::DOUBLE:
-        result = (*elem.Elem().doubleElem > 0);
-        break;
+        return (*elem.Elem().doubleElem > 0);
     case JsonElement::STRING:
-        result = elem.Elem().strElem->length() != 0;
-        break;
-    case JsonElement::ARRAY:
-        throw JSONException::UnsupportedConvertion(elem, "Bool");
-        break;
-    case JsonElement::OBJECT:
-        throw JSONException::UnsupportedConvertion(elem, "Bool");
-        break;
+        return elem.Elem().strElem->length() != 0;
     case JsonElement::JSON_NULL:
-        result = false;
-        break;
+        return false;
     }
 
-    return result;
+    return std::nullopt;
 }

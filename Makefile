@@ -36,8 +36,8 @@ else
 		src/config/Config.o
 endif
 
-LDFLAGS=-shared -ggdb -g -O0 -Werror
-CPPFLAGS=-Iinclude -DDEBUG -ggdb -g -fPIC -O0 -Werror
+LDFLAGS=-shared -ggdb -g -O0 -Werror -std=c++17
+CPPFLAGS=-Iinclude -DDEBUG -ggdb -g -fPIC -O0 -Werror -std=c++17
 CC=g++
 
 .PHONY: all clean clean_all

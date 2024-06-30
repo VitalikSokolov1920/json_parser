@@ -15,35 +15,35 @@ int main(int argc, char *argv[])
 
     auto result = parser.parse();
 
-    try
-    {
-        bool ok;
-        std::cout << "\n\n\nResult: " << result[0][10]["b"].toInt(&ok) + 200 << " convertion " << (ok ? "success" : "fail") << std::endl;
-    }
-    catch (const JSON::JSONException::BaseException &e)
-    {
-        std::cerr << e.what() << std::endl;
+    auto value = result[0][10]["b"].toInt();
 
-        return -1;
-    }
-    catch (const JSON::JSONException::UnsupportedConvertion &e)
+    if (value)
     {
-        std::cerr << e.what() << std::endl;
-
-        return -1;
+        std::cout
+            << "\n\n\nResult: " << value.value() + 200 << " success convertion " << std::endl;
     }
-    catch (const JSON::JSONException::IndexOutOfRange &e)
+    else
     {
-        std::cerr << e.what() << std::endl;
-
-        return -1;
+        std::cout << "failed conversion";
     }
-    catch (const JSON::JSONException::PropertyNotExist &e)
-    {
-        std::cerr << e.what() << std::endl;
+    // catch (const JSON::JSONException::UnsupportedConvertion &e)
+    // {
+    //     std::cerr << e.what() << std::endl;
 
-        return -1;
-    }
+    //     return -1;
+    // }
+    // catch (const JSON::JSONException::IndexOutOfRange &e)
+    // {
+    //     std::cerr << e.what() << std::endl;
+
+    //     return -1;
+    // }
+    // catch (const JSON::JSONException::PropertyNotExist &e)
+    // {
+    //     std::cerr << e.what() << std::endl;
+
+    //     return -1;
+    // }
 
     return 0;
 }

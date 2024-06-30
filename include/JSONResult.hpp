@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <string>
+#include <optional>
 
 #include "base_elements/JsonElement.hpp"
 
@@ -18,10 +19,9 @@ namespace JSON
         JSONDocument operator[](std::string);
         JSONDocument operator[](int);
         std::string toString();
-        int toInt(bool * = nullptr);
-        long toLong(bool * = nullptr);
-        double toDouble();
-        bool toBool();
+        std::optional<int> toInt();
+        std::optional<double> toDouble();
+        std::optional<bool> toBool();
         // virtual void setArrayValue(std::string fieldName, std::vector<long long> vec) = 0;
         // virtual void setArrayValue(std::string fieldName, std::vector<double> vec) = 0;
         /*
