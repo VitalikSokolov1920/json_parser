@@ -5,7 +5,14 @@
 
 int main(int argc, char *argv[])
 {
-    JSON::JSONFileReader fr("./test.json");
+    if (argc != 2)
+    {
+        std::cerr << "Expected path to JSON file. Return\n";
+
+        exit(EXIT_FAILURE);
+    }
+
+    JSON::JSONFileReader fr(argv[1]);
 
     std::string json;
 
@@ -15,17 +22,18 @@ int main(int argc, char *argv[])
 
     auto result = parser.parse();
 
-    auto value = result[0][10]["b"].toInt();
+    auto value = result["file_path"].toString();
 
-    if (value)
-    {
-        std::cout
-            << "\n\n\nResult: " << value.value() + 200 << " success convertion " << std::endl;
-    }
-    else
-    {
-        std::cout << "failed conversion";
-    }
+    std::cout << "File path prop: " << value << std::endl;
+
+    // if (value)
+    // {
+    //     std::cout << "Result: " << value.value() + 200 << " (success convertion)" << std::endl;
+    // }
+    // else
+    // {
+    //     std::cout << "failed conversion";
+    // }
     // catch (const JSON::JSONException::UnsupportedConvertion &e)
     // {
     //     std::cerr << e.what() << std::endl;
